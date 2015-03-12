@@ -1,0 +1,31 @@
+{
+  "name": "RoomMirror",
+  "version": "0.0.1",
+  "description": "Syntax hilight code block in MarkDown with CodeMirror",
+  "main": "build/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/all-user/RoomMirror.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/all-user/RoomMirror/issues"
+  },
+  "homepage": "https://github.com/all-user/RoomMirror",
+  "devDependencies": {
+    "gulp": "^3.8.11",
+    "gulp-util": "*",
+    "browserify": "*",
+    "vinyl-source-stream": "*",
+    "gulp-coffeelint": "*",
+    "gulp-coffee": "*",
+    "watchify": "*"
+  },
+  "dependencies": {
+    "codemirror": "^5.0.0"
+  }
+}
