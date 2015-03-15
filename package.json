@@ -2,27 +2,38 @@
   "name": "RoomMirror",
   "version": "0.0.1",
   "description": "Syntax hilight code block in MarkDown with CodeMirror",
-  "main": "build/app.js",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --compilers coffee:coffee-script --require coffee-script/register -R spec"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/all-user/RoomMirror.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Keita Okamoto<ok@aaa.email.ne.jp>",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/all-user/RoomMirror/issues"
   },
+  "browserify": {
+    "transform": [
+      "coffeeify"
+    ]
+  },
   "homepage": "https://github.com/all-user/RoomMirror",
   "devDependencies": {
+    "browserify": "^9.0.3",
+    "coffee-script": "^1.9.1",
+    "coffeeify": "^1.0.0",
+    "event-stream": "^3.3.0",
+    "extend": "^2.0.0",
     "gulp": "^3.8.11",
-    "gulp-util": "*",
-    "browserify": "*",
-    "vinyl-source-stream": "*",
-    "gulp-coffeelint": "*",
     "gulp-coffee": "*",
+    "gulp-coffeelint": "*",
+    "gulp-shell": "^0.4.0",
+    "gulp-util": "*",
+    "mocha": "^2.2.1",
+    "vinyl-source-stream": "*",
     "watchify": "*"
   },
   "dependencies": {

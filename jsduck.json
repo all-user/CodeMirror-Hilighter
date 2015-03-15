@@ -1,0 +1,7 @@
+{
+  "--title"     : "RoomMirror",
+  "--categories": "categories.json",
+  "--":[
+    "lib/js"
+  ]
+}

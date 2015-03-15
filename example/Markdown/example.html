@@ -1,0 +1,286 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<style>
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote {
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", Arial, sans-serif;
+    font-size: 13px;
+    line-height: 18px;
+    color: #737373;
+    background-color: white;
+    margin: 10px 13px 10px 13px;
+}
+table {
+	margin: 10px 0 15px 0;
+	border-collapse: collapse;
+}
+td,th {
+	border: 1px solid #ddd;
+	padding: 3px 10px;
+}
+th {
+	padding: 5px 10px;
+}
+
+a {
+    color: #0069d6;
+}
+a:hover {
+    color: #0050a3;
+    text-decoration: none;
+}
+a img {
+    border: none;
+}
+p {
+    margin-bottom: 9px;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #ccc;
+    line-height: 36px;
+    text-align: center;
+}
+h1 {
+    margin-bottom: 18px;
+    font-size: 30px;
+}
+h2 {
+    font-size: 24px;
+}
+h3 {
+    font-size: 18px;
+}
+h4 {
+    font-size: 16px;
+}
+h5 {
+    font-size: 14px;
+}
+h6 {
+    font-size: 13px;
+}
+hr {
+    margin: 0 0 19px;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+}
+blockquote {
+    padding: 13px 13px 21px 15px;
+    margin-bottom: 18px;
+    font-family:georgia,serif;
+    font-style: italic;
+}
+blockquote:before {
+    content:"\201C";
+    font-size:40px;
+    margin-left:-10px;
+    font-family:georgia,serif;
+    color:#eee;
+}
+blockquote p {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 18px;
+    margin-bottom: 0;
+    font-style: italic;
+}
+code, pre {
+    font-family: Monaco, Andale Mono, Courier New, monospace;
+}
+code {
+    background-color: #fee9cc;
+    color: rgba(0, 0, 0, 0.75);
+    padding: 1px 3px;
+    font-size: 12px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+pre {
+    display: block;
+    padding: 14px;
+    margin: 0 0 18px;
+    line-height: 16px;
+    font-size: 11px;
+    border: 1px solid #d9d9d9;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+pre code {
+    background-color: #fff;
+    color:#737373;
+    font-size: 11px;
+    padding: 0;
+}
+sup {
+    font-size: 0.83em;
+    vertical-align: super;
+    line-height: 0;
+}
+* {
+	-webkit-print-color-adjust: exact;
+}
+@media screen and (min-width: 914px) {
+    body {
+        width: 854px;
+        margin:10px auto;
+    }
+}
+@media print {
+	body,code,pre code,h1,h2,h3,h4,h5,h6 {
+		color: black;
+	}
+	table, pre {
+		page-break-inside: avoid;
+	}
+}
+</style>
+<title>RoomMirror with Markdown</title>
+
+<link rel="stylesheet" href="../../node_modules/codemirror/lib/codemirror.css">
+<link rel="stylesheet" href="../../node_modules/codemirror/theme/monokai.css">
+<style>
+    body {
+        background: #333;
+    }
+
+    .RoomMirror {
+        width: 98%;
+        max-width: 500px;
+        margin: 20px auto;
+    }
+</style>
+<script src="index.js"></script>
+</head>
+<body>
+<h1>RoomMirror with Markdown</h1>
+
+<p class="rm-cfg" data-eval="{
+  mode        : 'javascript',
+  lineNumbers : true,
+  lineWrapping: true
+}"></p>
+
+
+<pre><code>var test = "A long long ......................................................................................................................................................................................long string.";
+
+console.log(test);
+</code></pre>
+
+<p class="rm-cfg" data-eval="{
+  mode        : 'javascript',
+  lineNumbers : true,
+  lineWrapping: false
+}"></p>
+
+
+<pre><code>var test = "A long long ......................................................................................................................................................................................long string.";
+
+console.log(test);
+</code></pre>
+
+<p class="rm-cfg" data-eval="{mode: 'ruby', lineWrapping: false}"></p>
+
+
+<pre><code>require 'pp'
+W, H = 300, 400
+(0...W).each{ |i| p i * i }.map{ |i| [i, i+1] }.flatten
+</code></pre>
+
+<pre class="rm-elm" data-eval="{mode:'coffeescript'}"><code>getAnnotations = (require './evaluable-annotation').getAnnotations
+addCSS = require './add-css'
+extend = require 'extend'
+
+defaultConfig =
+  viewportMargin: Infinity
+  readOnly      : true
+
+addCSS """
+  .RoomMirror {
+    height: auto;
+  }
+"""
+
+hilight = (annot) ->
+  config = extend(
+    {},
+    defaultConfig,
+    @preset,
+    annot.data,
+    value: annot.elm.textContent)
+  CodeMirror (editor) ->
+    editor.classList.add 'RoomMirror'
+    annot.elm.parentNode.replaceChild editor, annot.elm
+  , config
+
+byAnnotations = (qs) ->
+  annotations = getAnnotations qs
+  for annot in annotations
+    annot.ref.remove()
+    (hilight.bind @) annot
+
+
+
+###*
+* @method RoomMirror
+* HTML内の任意の要素をコードブロックとして、`CodeMirror`を使用したシンタックスハイライトを行うツール
+###
+RoomMirror = (qs) ->
+  annotations = getAnnotations qs
+    .map (annot) ->
+      annot.elm = annot.ref
+  for annot in annotations
+    (hilight.bind @) annot
+
+
+extend RoomMirror,
+  ###*
+  * @cfg {Object} preset
+  * `CodeMirror`のデフォルトの動作を指定する&lt;br>
+  * シンタックスハイライトとして使う場合はカラースキームの指定程度で大丈夫
+  * @cfg {Number} [viewportMargin=Infinity]
+  * コードブロックの高さを行数で指定する&lt;br>
+  * この値を`Infinity`に設定し、CSSで`.CodeMirror`
+  * その他のオブションはCodeMirror`の[**Configuration**](http://codemirror.net/doc/manual.html#config)を参照&lt;br>
+  ###
+  preset: {}
+  ###*
+  * @method byAnnotations
+  * HTML内の任意の要素を、次に続く要素のアノテーションとみなしてシンタックスハイライトを行う&lt;br>
+  * `data-eval`の文字列がevalで評価され、デフォルトの設定とマージされた後`CodeMirror`に渡される
+  *
+  *     &lt;p class="rm-cfg" data-eval="{ mode:'javascript' }">&lt;/p>
+  *     &lt;pre>&lt;code>var test = 'test';&lt;/code>&lt;/pre>
+  *
+  *     &lt;script>
+  *         var codeBlocks = RoomMirror.byAnnotations('.rm-cfg');
+  *     &lt;/script>
+  *
+  * @param {String} qs  String for querySelector
+  * @return {CodeMirror}
+  *
+  ###
+  byAnnotations: byAnnotations
+
+module.exports = RoomMirror
+</code></pre>
+</body>
+</html>

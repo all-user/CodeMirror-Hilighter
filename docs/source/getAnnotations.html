@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">(function() {
+  var getAnnotations;
+
+  getAnnotations = function(qs) {
+    var annotations;
+    annotations = document.querySelectorAll(qs);
+    return [].map.call(annotations, function(annot) {
+      var data, elm;
+      elm = annot.nextSibling;
+      while (elm.nodeType === Node.TEXT_NODE) {
+        elm = elm.nextSibling;
+      }
+      if (!elm) {
+        return;
+      }
+      data = eval(&quot;(&quot; + (annot.getAttribute(&#39;data-eval&#39;)) + &quot;)&quot;);
+      return {
+        ref: annot,
+        elm: elm,
+        data: data
+      };
+    });
+  };
+
+  module.exports = getAnnotations;
+
+}).call(this);
+</pre>
+</body>
+</html>
