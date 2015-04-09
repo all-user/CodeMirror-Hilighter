@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>RoomMirror Test</title>
+    <script src="./node_modules/codemirror/lib/codemirror.js"></script>
+    <script src="./browser/exclude_cm.js"></script>
+    <script src="./node_modules/codemirror/mode/javascript/javascript.js"></script>
+    <link href="./node_modules/codemirror/lib/codemirror.css" rel="stylesheet">
+    <link href="./node_modules/codemirror/theme/monokai.css" rel="stylesheet">
+</head>
+<body>
+<p class="rm" data-eval="{ mode: 'javascript' }">
+<pre><code>var test = 'test';</code></pre>
+<p class="rm-a" data-eval="{ mode: 'javascript', theme: 'default' }">var plainText = 'abcdefgeijklmnopqrstuvwxyz';
+console.log(plainText.split('').join('-'));</p>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+        RoomMirror.preset = {
+            theme: 'monokai',
+            mode: 'javascript',
+            lineNumbers: true
+        };
+        RoomMirror.byAnnotations('.rm');
+
+        RoomMirror('.rm-a');
+    });
+</script>
+</body>
+</html>

@@ -1,5 +1,4 @@
-window.CodeMirror = require 'codemirror'
-RoomMirror = require '../../lib/coffee/index'
+RoomMirror = require '../../lib'
 
 # mode files request generatior
 # modePath = '../../node_modules/codemirror/mode/'

@@ -1,47 +1,39 @@
 gulp = require 'gulp'
-gutil = require 'gulp-util'
 browserify = require 'browserify'
 source = require 'vinyl-source-stream'
 coffee = require 'gulp-coffee'
 coffeelint = require 'gulp-coffeelint'
-watchify = require 'watchify'
+coffeeify = require 'coffeeify'
 merge = (require 'event-stream').merge
 shell = require 'gulp-shell'
 
-gulp.task 'browserify', ->
-  browserify
-    entries : ['./lib/coffee/index.coffee']
-    extensions : ['.coffee']
-  .bundle()
-  .pipe source 'index.js'
-  .pipe gulp.dest './build/'
-
-gulp.task 'watch', ->
-  bundler =
-    watchify
-      entries : ['./lib/coffee/index.coffee']
-      extensions : ['.coffee']
-      verbose : on
-  rebundle = ->
-    bundler.bundle()
-    .on 'error', (e) ->
-      gutil.log 'Browserify Error', e
-    .pipe source 'index.js'
-    .pipe gulp.dest './build/'
-  bundler.on 'update', rebundle
-  rebundle()
-
 gulp.task 'lint', ->
-  gulp.src ['./lib/coffee/**/*.coffee', './lib/coffee/*.coffee']
+  gulp.src ['./src/**/*.coffee', './example/**/*.coffee']
     .pipe coffeelint()
     .pipe coffeelint.reporter()
 
+gulp.task 'coffee', ['lint'], ->
+  gulp.src './src/**/*.coffee'
+  .pipe coffee()
+  .pipe gulp.dest './lib'
 
-gulp.task 'paraout', ->
-  gulp.src './lib/coffee/**/*.coffee'
-    .pipe coffee()
-    .pipe gulp.dest './lib/js/'
+gulp.task 'browserify', ['coffee'], ->
+  browserify()
+  .add './lib/browser.js'
+  .bundle()
+  .pipe source 'build.js'
+  .pipe gulp.dest './browser'
 
+gulp.task 'others', ->
+  gulp.watch './browser/build.js', ['exclude', 'example', 'jsduck']
+
+gulp.task 'exclude', ->
+  browserify()
+  .add './lib/browser.js'
+  .exclude 'codemirror'
+  .bundle()
+  .pipe source 'exclude_cm.js'
+  .pipe gulp.dest './browser'
 
 gulp.task 'example', ->
   examples = ['Markdown']
@@ -49,19 +41,12 @@ gulp.task 'example', ->
     browserify
       entries : ["./example/#{ exampleName }/index.coffee"]
       extensions : ['.coffee']
+    .transform coffeeify
     .bundle()
     .pipe source 'index.js'
     .pipe gulp.dest "./example/#{ exampleName }"
   merge tasks...
 
-gulp.task 'test', ->
-  browserify
-    entries: ['./test/tests.coffee']
-    extensions: ['.coffee']
-  .bundle()
-  .pipe source 'tests.js'
-  .pipe gulp.dest './test/build'
+gulp.task 'jsduck', shell.task ['jsduck -o ./docs --config=jsduck.json']
 
-gulp.task 'jsduck', ['paraout'], shell.task ['jsduck -o ./docs --config=jsduck.json']
-
-gulp.task 'default', ['lint', 'browserify', 'jsduck', 'example', 'test']
+gulp.task 'default', ['browserify']

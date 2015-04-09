@@ -16,16 +16,7 @@
 </head>
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js">(function() {
-  var addCSS;
-
-  addCSS = function(rule) {
-    var styleEle;
-    styleEle = document.createElement(&#39;style&#39;);
-    document.head.appendChild(styleEle);
-    return styleEle.sheet.insertRule(rule, 0);
-  };
-
-  module.exports = addCSS;
+  window.RoomMirror = require(&#39;./index.js&#39;);
 
 }).call(this);
 </pre>

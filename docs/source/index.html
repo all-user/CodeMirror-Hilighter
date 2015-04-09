@@ -16,11 +16,15 @@
 </head>
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js">(function() {
-  var RoomMirror, addCSS, byAnnotations, defaultConfig, evalAnnot, extend, hilight;
+  var ET, RoomMirror, appendCSS, byAnnotations, defaultConfig, extend, hilight;
 
-  evalAnnot = require(&#39;./evaluable-annotation&#39;);
+  if (window.CodeMirror == null) {
+    window.CodeMirror = require(&#39;codemirror&#39;);
+  }
 
-  addCSS = require(&#39;./add-css&#39;);
+  ET = require(&#39;evaluable-tag&#39;);
+
+  appendCSS = require(&#39;append-css&#39;);
 
   extend = require(&#39;extend&#39;);
 
@@ -29,44 +33,43 @@
     readOnly: true
   };
 
-  addCSS(&quot;.RoomMirror {\n  height: auto;\n}&quot;);
+  appendCSS(&quot;.RoomMirror {\n  height: auto;\n}&quot;);
 
-  hilight = function(annot) {
+  hilight = function(et) {
     var config;
-    config = extend({}, defaultConfig, this.preset, annot.data, {
-      value: annot.elm.textContent
+    config = extend({}, defaultConfig, this.preset, et.result, {
+      value: et.annotated.textContent
     });
     return CodeMirror(function(editor) {
       editor.classList.add(&#39;RoomMirror&#39;);
-      return annot.elm.parentNode.replaceChild(editor, annot.elm);
+      return et.annotated.parentNode.replaceChild(editor, et.annotated);
     }, config);
   };
 
   byAnnotations = function(qs) {
-    var annot, annotations, i, len;
-    annotations = evalAnnot.getAnnotations(qs);
-    for (i = 0, len = annotations.length; i &lt; len; i++) {
-      annot = annotations[i];
-      annot.ref.remove();
-      if (!annot.elm) {
+    var et, evaluated, i, len;
+    evaluated = ET.evalAnnotationsBy(qs);
+    for (i = 0, len = evaluated.length; i &lt; len; i++) {
+      et = evaluated[i];
+      if (!et.annotated) {
         return;
       }
-      (hilight.bind(this))(annot);
+      (hilight.bind(this))(et);
     }
   };
 
 
 <span id='RoomMirror'>  /**
 </span>  * @class RoomMirror
-  * HTML内の任意の要素をコードブロックとして、`CodeMirror`を使用したシンタックスハイライトを行う&lt;br&gt;
+  * HTML内の任意の要素に`CodeMirror`を使用したシンタックスハイライトを行う&lt;br&gt;
   * `data-eval`の文字列がevalで評価され、デフォルトの設定とマージされた後`CodeMirror`に渡される
   *
-  *     &lt;pre class=&quot;rm-elm&quot; data-eval=&quot;{ mode:&#39;javascript&#39; }&quot;&gt;&lt;code&gt;
+  *     &lt;pre class=&quot;rm&quot; data-eval=&quot;{ mode:&#39;javascript&#39; }&quot;&gt;&lt;code&gt;
   *     var test = &#39;test&#39;;
   *     &lt;/code&gt;&lt;/pre&gt;
   *
   *     &lt;script&gt;
-  *         var codeBlocks = RoomMirror(&#39;.rm-elm&#39;);
+  *         var codeBlocks = RoomMirror(&#39;.rm&#39;);
   *     &lt;/script&gt;
   *
   * @param {String} qs  String for querySelector
@@ -74,15 +77,12 @@
    */
 
   RoomMirror = function(qs) {
-    var annot, annotations, i, len, results;
-    annotations = evalAnnot.getElements(qs).map(function(annot) {
-      annot.elm = annot.ref;
-      return annot;
-    });
+    var et, evaluated, i, len, results;
+    evaluated = ET.evalBy(qs);
     results = [];
-    for (i = 0, len = annotations.length; i &lt; len; i++) {
-      annot = annotations[i];
-      results.push((hilight.bind(RoomMirror))(annot));
+    for (i = 0, len = evaluated.length; i &lt; len; i++) {
+      et = evaluated[i];
+      results.push((hilight.bind(RoomMirror))(et));
     }
     return results;
   };
@@ -113,16 +113,16 @@
 
 <span id='RoomMirror-method-byAnnotations'>    /**
 </span>    * @method byAnnotations
-    * HTML内の任意の要素を、次に続く要素のアノテーションとみなしてシンタックスハイライトを行う&lt;br&gt;
+    * HTML内の任意の要素をアノテーションとみなして、次に続く要素のシンタックスハイライトを行う&lt;br&gt;
     * `data-eval`の文字列がevalで評価され、デフォルトの設定とマージされた後`CodeMirror`に渡される
     *
-    *     &lt;p class=&quot;rm-cfg&quot; data-eval=&quot;{ mode:&#39;javascript&#39; }&quot;&gt;&lt;/p&gt;
+    *     &lt;p class=&quot;rm-a&quot; data-eval=&quot;{ mode:&#39;javascript&#39; }&quot;&gt;&lt;/p&gt;
     *     &lt;pre&gt;&lt;code&gt;
     *     var test = &#39;test&#39;;
     *     &lt;/code&gt;&lt;/pre&gt;
     *
     *     &lt;script&gt;
-    *         var codeBlocks = RoomMirror.byAnnotations(&#39;.rm-cfg&#39;);
+    *         var codeBlocks = RoomMirror.byAnnotations(&#39;.rm-a&#39;);
     *     &lt;/script&gt;
     *
     * @param {String} qs  String for querySelector

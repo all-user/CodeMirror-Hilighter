@@ -1,2 +1,2 @@
-var RoomMirror = require('./lib/js');
+var RoomMirror = require('./lib');
 module.exports = RoomMirror;
