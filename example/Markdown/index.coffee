@@ -17,7 +17,7 @@ require '../../node_modules/codemirror/mode/javascript/javascript'
 require '../../node_modules/codemirror/mode/coffeescript/coffeescript'
 require '../../node_modules/codemirror/mode/ruby/ruby'
 
-# preset to hilight
+# default settings to hilight
 #   {
 #     viewportMargin: Infinity,
 #     readOnly      : true

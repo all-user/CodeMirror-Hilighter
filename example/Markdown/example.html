@@ -54,9 +54,8 @@ h3,
 h4,
 h5,
 h6 {
-    color: #ccc;
+    color: #404040;
     line-height: 36px;
-    text-align: center;
 }
 h1 {
     margin-bottom: 18px;
@@ -154,7 +153,6 @@ sup {
 }
 </style>
 <title>RoomMirror with Markdown</title>
-
 <link rel="stylesheet" href="../../node_modules/codemirror/lib/codemirror.css">
 <link rel="stylesheet" href="../../node_modules/codemirror/theme/monokai.css">
 <style>
@@ -166,9 +164,12 @@ sup {
         width: 98%;
         max-width: 500px;
         margin: 20px auto;
+        font-size:20px;
+        line-height: 1.4em;
     }
 </style>
 <script src="index.js"></script>
+
 </head>
 <body>
 <h1>RoomMirror with Markdown</h1>
@@ -194,8 +195,7 @@ console.log(test);
 
 <pre><code>var test = "A long long ......................................................................................................................................................................................long string.";
 
-console.log(test);
-</code></pre>
+console.log(test);</code></pre>
 
 <p class="rm-cfg" data-eval="{mode: 'ruby', lineWrapping: false}"></p>
 
@@ -203,84 +203,6 @@ console.log(test);
 <pre><code>require 'pp'
 W, H = 300, 400
 (0...W).each{ |i| p i * i }.map{ |i| [i, i+1] }.flatten
-</code></pre>
-
-<pre class="rm-elm" data-eval="{mode:'coffeescript'}"><code>getAnnotations = (require './evaluable-annotation').getAnnotations
-addCSS = require './add-css'
-extend = require 'extend'
-
-defaultConfig =
-  viewportMargin: Infinity
-  readOnly      : true
-
-addCSS """
-  .RoomMirror {
-    height: auto;
-  }
-"""
-
-hilight = (annot) ->
-  config = extend(
-    {},
-    defaultConfig,
-    @preset,
-    annot.data,
-    value: annot.elm.textContent)
-  CodeMirror (editor) ->
-    editor.classList.add 'RoomMirror'
-    annot.elm.parentNode.replaceChild editor, annot.elm
-  , config
-
-byAnnotations = (qs) ->
-  annotations = getAnnotations qs
-  for annot in annotations
-    annot.ref.remove()
-    (hilight.bind @) annot
-
-
-
-###*
-* @method RoomMirror
-* HTML内の任意の要素をコードブロックとして、`CodeMirror`を使用したシンタックスハイライトを行うツール
-###
-RoomMirror = (qs) ->
-  annotations = getAnnotations qs
-    .map (annot) ->
-      annot.elm = annot.ref
-  for annot in annotations
-    (hilight.bind @) annot
-
-
-extend RoomMirror,
-  ###*
-  * @cfg {Object} preset
-  * `CodeMirror`のデフォルトの動作を指定する&lt;br>
-  * シンタックスハイライトとして使う場合はカラースキームの指定程度で大丈夫
-  * @cfg {Number} [viewportMargin=Infinity]
-  * コードブロックの高さを行数で指定する&lt;br>
-  * この値を`Infinity`に設定し、CSSで`.CodeMirror`
-  * その他のオブションはCodeMirror`の[**Configuration**](http://codemirror.net/doc/manual.html#config)を参照&lt;br>
-  ###
-  preset: {}
-  ###*
-  * @method byAnnotations
-  * HTML内の任意の要素を、次に続く要素のアノテーションとみなしてシンタックスハイライトを行う&lt;br>
-  * `data-eval`の文字列がevalで評価され、デフォルトの設定とマージされた後`CodeMirror`に渡される
-  *
-  *     &lt;p class="rm-cfg" data-eval="{ mode:'javascript' }">&lt;/p>
-  *     &lt;pre>&lt;code>var test = 'test';&lt;/code>&lt;/pre>
-  *
-  *     &lt;script>
-  *         var codeBlocks = RoomMirror.byAnnotations('.rm-cfg');
-  *     &lt;/script>
-  *
-  * @param {String} qs  String for querySelector
-  * @return {CodeMirror}
-  *
-  ###
-  byAnnotations: byAnnotations
-
-module.exports = RoomMirror
 </code></pre>
 </body>
 </html>

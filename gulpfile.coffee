@@ -8,7 +8,7 @@ merge = (require 'event-stream').merge
 shell = require 'gulp-shell'
 
 gulp.task 'lint', ->
-  gulp.src ['./src/**/*.coffee', './example/**/*.coffee']
+  gulp.src ['./**.coffee']
     .pipe coffeelint()
     .pipe coffeelint.reporter()
 
@@ -21,18 +21,18 @@ gulp.task 'browserify', ['coffee'], ->
   browserify()
   .add './lib/browser.js'
   .bundle()
-  .pipe source 'build.js'
+  .pipe source 'roommirror.js'
   .pipe gulp.dest './browser'
 
 gulp.task 'others', ->
-  gulp.watch './browser/build.js', ['exclude', 'example', 'jsduck']
+  gulp.watch './browser/roommirror.js', ['exclude', 'example', 'jsduck']
 
 gulp.task 'exclude', ->
   browserify()
   .add './lib/browser.js'
   .exclude 'codemirror'
   .bundle()
-  .pipe source 'exclude_cm.js'
+  .pipe source 'rm_without_cm.js'
   .pipe gulp.dest './browser'
 
 gulp.task 'example', ->
