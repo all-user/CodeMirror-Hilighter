@@ -1,7 +1,7 @@
 {
   "name": "RoomMirror",
   "version": "0.0.1",
-  "description": "Syntax highlight code blocks that is generated from Markdown with CodeMirror."
+  "description": "Syntax highlight code blocks that is generated from Markdown with CodeMirror.",
   "main": "index.js",
   "scripts": {
     "test": "testem ci -P 4"
