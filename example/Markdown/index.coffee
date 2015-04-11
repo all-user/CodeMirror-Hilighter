@@ -27,6 +27,6 @@ require '../../node_modules/codemirror/mode/ruby/ruby'
 RoomMirror.preset = theme: 'monokai'
 
 document.addEventListener 'DOMContentLoaded', ->
-  RoomMirror.byAnnotations '.rm-cfg'
-  RoomMirror '.rm-elm'
+  window.rmA = RoomMirror.byAnnotations '.rm-cfg'
+  window.rmE = RoomMirror '.rm-elm'
 

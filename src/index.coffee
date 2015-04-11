@@ -26,11 +26,13 @@ hilight = (et) ->
     et.annotated.parentNode.replaceChild editor, et.annotated
   , config
 
-byAnnotations = (qs) ->
+byAnnotation = (qs) ->
   evaluated = ET.evalAnnotationsBy qs
   for et in evaluated
-    return unless et.annotated
-    (hilight.bind @) et
+    if et.annotated?
+      (hilight.bind @) et
+    else
+      null
 
 
 ###*
@@ -93,7 +95,7 @@ extend RoomMirror,
   * @cfg {Integer} [preset.firstLineNumber=1]
   * `lineNumbers`を`true`に設定した時、行番号がいくつから始まるかを指定する<br>
   * デフォルトでは`1`になっている
-  * @cfg {Function: (Integer) -> String} [preset.lineNumberFormatter]
+  * @cfg {(Integer) -> String} [preset.lineNumberFormatter]
   * `lineNumbers`を`true`に設定した時、行番号の表示フォーマットを指定する<br>
   * 行番号を表す整数を受け取り、整形した文字列を返す関数を指定する
   * @cfg {Boolean} [preset.fixedGutter=true]
@@ -104,7 +106,7 @@ extend RoomMirror,
   ###
   preset: {}
   ###*
-  * @method byAnnotations
+  * @method byAnnotation
   * HTML内の任意の要素をアノテーションとみなして、次に続く要素のシンタックスハイライトを行う<br>
   * `data-eval`の文字列がevalで評価され、デフォルトの設定とマージされた後`CodeMirror`に渡される<br>
   * Markdownのコードブロックをシンタックスハイライトする事を想定している<br>
@@ -118,7 +120,7 @@ extend RoomMirror,
   *
   * javascript
   *
-  *     var codeBlocks = RoomMirror.byAnnotations('.rm-a');
+  *     var codeBlocks = RoomMirror.byAnnotation('.rm-a');
   *
   * __Markdownの場合__
   *
@@ -131,13 +133,13 @@ extend RoomMirror,
   *
   * javascript
   *
-  *     var codeBlocks = RoomMirror.byAnnotations('.rm-a');
+  *     var codeBlocks = RoomMirror.byAnnotation('.rm-a');
   *
   *
   * @param {String} qs  String for querySelector
   * @return {CodeMirror}
   ###
-  byAnnotations: byAnnotations
+  byAnnotation: byAnnotation
 
 
 module.exports = RoomMirror

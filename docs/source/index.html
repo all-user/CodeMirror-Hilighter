@@ -16,7 +16,7 @@
 </head>
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js">(function() {
-  var ET, RoomMirror, appendCSS, byAnnotations, defaultConfig, extend, hilight;
+  var ET, RoomMirror, appendCSS, byAnnotation, defaultConfig, extend, hilight;
 
   if (window.CodeMirror == null) {
     window.CodeMirror = require(&#39;codemirror&#39;);
@@ -46,16 +46,19 @@
     }, config);
   };
 
-  byAnnotations = function(qs) {
-    var et, evaluated, i, len;
+  byAnnotation = function(qs) {
+    var et, evaluated, i, len, results;
     evaluated = ET.evalAnnotationsBy(qs);
+    results = [];
     for (i = 0, len = evaluated.length; i &lt; len; i++) {
       et = evaluated[i];
-      if (!et.annotated) {
-        return;
+      if (et.annotated != null) {
+        results.push((hilight.bind(this))(et));
+      } else {
+        results.push(null);
       }
-      (hilight.bind(this))(et);
     }
+    return results;
   };
 
 
@@ -126,7 +129,7 @@
     * @cfg {Integer} [preset.firstLineNumber=1]
     * `lineNumbers`を`true`に設定した時、行番号がいくつから始まるかを指定する&lt;br&gt;
     * デフォルトでは`1`になっている
-    * @cfg {Function: (Integer) -&gt; String} [preset.lineNumberFormatter]
+    * @cfg {(Integer) -&gt; String} [preset.lineNumberFormatter]
     * `lineNumbers`を`true`に設定した時、行番号の表示フォーマットを指定する&lt;br&gt;
     * 行番号を表す整数を受け取り、整形した文字列を返す関数を指定する
     * @cfg {Boolean} [preset.fixedGutter=true]
@@ -137,8 +140,8 @@
      */
     preset: {},
 
-<span id='RoomMirror-method-byAnnotations'>    /**
-</span>    * @method byAnnotations
+<span id='RoomMirror-method-byAnnotation'>    /**
+</span>    * @method byAnnotation
     * HTML内の任意の要素をアノテーションとみなして、次に続く要素のシンタックスハイライトを行う&lt;br&gt;
     * `data-eval`の文字列がevalで評価され、デフォルトの設定とマージされた後`CodeMirror`に渡される&lt;br&gt;
     * Markdownのコードブロックをシンタックスハイライトする事を想定している&lt;br&gt;
@@ -152,7 +155,7 @@
     *
     * javascript
     *
-    *     var codeBlocks = RoomMirror.byAnnotations(&#39;.rm-a&#39;);
+    *     var codeBlocks = RoomMirror.byAnnotation(&#39;.rm-a&#39;);
     *
     * __Markdownの場合__
     *
@@ -165,13 +168,13 @@
     *
     * javascript
     *
-    *     var codeBlocks = RoomMirror.byAnnotations(&#39;.rm-a&#39;);
+    *     var codeBlocks = RoomMirror.byAnnotation(&#39;.rm-a&#39;);
     *
     *
     * @param {String} qs  String for querySelector
     * @return {CodeMirror}
      */
-    byAnnotations: byAnnotations
+    byAnnotation: byAnnotation
   });
 
   module.exports = RoomMirror;

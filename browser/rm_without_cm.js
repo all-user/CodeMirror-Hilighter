@@ -6,7 +6,7 @@
 
 },{"./index.js":2}],2:[function(require,module,exports){
 (function() {
-  var ET, RoomMirror, appendCSS, byAnnotations, defaultConfig, extend, hilight;
+  var ET, RoomMirror, appendCSS, byAnnotation, defaultConfig, extend, hilight;
 
   if (window.CodeMirror == null) {
     window.CodeMirror = require('codemirror');
@@ -36,16 +36,19 @@
     }, config);
   };
 
-  byAnnotations = function(qs) {
-    var et, evaluated, i, len;
+  byAnnotation = function(qs) {
+    var et, evaluated, i, len, results;
     evaluated = ET.evalAnnotationsBy(qs);
+    results = [];
     for (i = 0, len = evaluated.length; i < len; i++) {
       et = evaluated[i];
-      if (!et.annotated) {
-        return;
+      if (et.annotated != null) {
+        results.push((hilight.bind(this))(et));
+      } else {
+        results.push(null);
       }
-      (hilight.bind(this))(et);
     }
+    return results;
   };
 
 
@@ -116,7 +119,7 @@
     * @cfg {Integer} [preset.firstLineNumber=1]
     * `lineNumbers`を`true`に設定した時、行番号がいくつから始まるかを指定する<br>
     * デフォルトでは`1`になっている
-    * @cfg {Function: (Integer) -> String} [preset.lineNumberFormatter]
+    * @cfg {(Integer) -> String} [preset.lineNumberFormatter]
     * `lineNumbers`を`true`に設定した時、行番号の表示フォーマットを指定する<br>
     * 行番号を表す整数を受け取り、整形した文字列を返す関数を指定する
     * @cfg {Boolean} [preset.fixedGutter=true]
@@ -128,7 +131,7 @@
     preset: {},
 
     /**
-    * @method byAnnotations
+    * @method byAnnotation
     * HTML内の任意の要素をアノテーションとみなして、次に続く要素のシンタックスハイライトを行う<br>
     * `data-eval`の文字列がevalで評価され、デフォルトの設定とマージされた後`CodeMirror`に渡される<br>
     * Markdownのコードブロックをシンタックスハイライトする事を想定している<br>
@@ -142,7 +145,7 @@
     *
     * javascript
     *
-    *     var codeBlocks = RoomMirror.byAnnotations('.rm-a');
+    *     var codeBlocks = RoomMirror.byAnnotation('.rm-a');
     *
     * __Markdownの場合__
     *
@@ -155,13 +158,13 @@
     *
     * javascript
     *
-    *     var codeBlocks = RoomMirror.byAnnotations('.rm-a');
+    *     var codeBlocks = RoomMirror.byAnnotation('.rm-a');
     *
     *
     * @param {String} qs  String for querySelector
     * @return {CodeMirror}
      */
-    byAnnotations: byAnnotations
+    byAnnotation: byAnnotation
   });
 
   module.exports = RoomMirror;
