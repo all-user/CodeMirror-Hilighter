@@ -7,5 +7,5 @@
     "./test/test.js"
   ],
   "before_tests": "gulp && gulp test",
-  "after_tests": "rm ./test/*.js"
+  "launch_in_ci": ["chrome", "firefox", "safari"]
 }
