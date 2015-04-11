@@ -47,6 +47,16 @@ gulp.task 'example', ->
     .pipe gulp.dest "./example/#{ exampleName }"
   merge tasks...
 
+gulp.task 'test', ->
+  browserify
+    entries: ['./test/test.coffee']
+    extensions: ['.coffee']
+  .transform coffeeify
+  .transform 'espowerify'
+  .bundle()
+  .pipe source 'test.js'
+  .pipe gulp.dest './test'
+
 gulp.task 'jsduck', shell.task ['jsduck -o ./docs --config=jsduck.json']
 
 gulp.task 'default', ['browserify']

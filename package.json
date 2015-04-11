@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "Syntax hilight code block in MarkDown with CodeMirror",
   "main": "index.js",
+  "scripts": {
+    "test": "testem ci -P 4"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/all-user/RoomMirror.git"
@@ -17,11 +20,16 @@
     "browserify": "^9.0.3",
     "coffee-script": "^1.9.1",
     "coffeeify": "^1.0.0",
+    "espowerify": "^0.10.0",
     "event-stream": "^3.3.0",
     "gulp": "^3.8.11",
     "gulp-coffee": "*",
     "gulp-coffeelint": "*",
     "gulp-shell": "^0.4.0",
+    "mocha": "^2.2.4",
+    "phantomjs": "^1.9.16",
+    "power-assert": "^0.10.2",
+    "testem": "^0.8.0-0",
     "vinyl-source-stream": "*"
   },
   "dependencies": {

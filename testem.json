@@ -1,0 +1,11 @@
+{
+  "framework": "mocha",
+  "src_files": [
+    "*.coffee"
+  ],
+  "serve_files": [
+    "./test/test.js"
+  ],
+  "before_tests": "gulp && gulp test",
+  "after_tests": "rm ./test/*.js"
+}
