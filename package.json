@@ -1,6 +1,6 @@
 {
   "name": "roommirror",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Syntax highlight code blocks that is generated from Markdown with CodeMirror.",
   "main": "index.js",
   "scripts": {
@@ -15,6 +15,12 @@
   "bugs": {
     "url": "https://github.com/all-user/RoomMirror/issues"
   },
+  "keyword": [
+    "syntax highlight",
+    "codemirror",
+    "Markdown",
+    "browserify"
+  ],
   "homepage": "https://github.com/all-user/RoomMirror",
   "devDependencies": {
     "browserify": "^9.0.3",
