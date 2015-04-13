@@ -18,7 +18,7 @@ RoomMirror.preset = {
 };
 
 document.addEventListener('DOMContentLoaded', function() {
-  window.rmA = RoomMirror.byAnnotations('.rm-cfg');
+  window.rmA = RoomMirror.byAnnotation('.rm-cfg');
   return window.rmE = RoomMirror('.rm-elm');
 });
 
