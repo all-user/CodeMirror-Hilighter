@@ -1,5 +1,5 @@
 # RoomMirror
-Syntax highlight code blocks that is generated from Markdown with CodeMirror.
+Syntax highlight code blocks generated from Markdown with CodeMirror.
 
 ## install
 ```bash
