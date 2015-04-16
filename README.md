@@ -1,7 +1,7 @@
 # RoomMirror
 Syntax highlight code blocks generated from Markdown with CodeMirror.
 
-## doc in japanees
+## doc in japanese
 
 [RoomMirror Doc: 日本語ドキュメント](http://all-user.github.io/roommirror/docs)
 
