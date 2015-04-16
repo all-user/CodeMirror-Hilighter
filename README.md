@@ -1,6 +1,10 @@
 # RoomMirror
 Syntax highlight code blocks generated from Markdown with CodeMirror.
 
+## doc in japanees
+
+[RoomMirror Doc: 日本語ドキュメント](http://all-user.github.io/roommirror/docs)
+
 ## install
 ```bash
 npm install roommirror
