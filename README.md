@@ -1,9 +1,9 @@
 # RoomMirror
 Syntax highlight code blocks generated from Markdown with CodeMirror.
 
-## doc in japanese
-
+__Doc in japanese__
 [RoomMirror Doc: 日本語ドキュメント](http://all-user.github.io/roommirror/docs)
+
 
 ## install
 ```bash
