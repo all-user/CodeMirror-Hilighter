@@ -321,7 +321,7 @@ describe('RoomMirror test', function () {
   *     var codeBlocks = RoomMirror('.rm');
   *
   * @param {String} qs  String for querySelector
-  * @return {CodeMirror}
+  * @return {[CodeMirror]}
    */
 
   RoomMirror = function(qs) {
@@ -415,7 +415,7 @@ describe('RoomMirror test', function () {
     *
     *
     * @param {String} qs  String for querySelector
-    * @return {CodeMirror}
+    * @return {[CodeMirror]}
      */
     byAnnotation: byAnnotation
   });

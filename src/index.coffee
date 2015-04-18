@@ -51,7 +51,7 @@ byAnnotation = (qs) ->
 *     var codeBlocks = RoomMirror('.rm');
 *
 * @param {String} qs  String for querySelector
-* @return {CodeMirror}
+* @return {[CodeMirror]}
 ###
 RoomMirror = (qs) ->
   evaluated = ET.evalBy qs
@@ -137,7 +137,7 @@ extend RoomMirror,
   *
   *
   * @param {String} qs  String for querySelector
-  * @return {CodeMirror}
+  * @return {[CodeMirror]}
   ###
   byAnnotation: byAnnotation
 

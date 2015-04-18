@@ -68,7 +68,7 @@
   *     var codeBlocks = RoomMirror('.rm');
   *
   * @param {String} qs  String for querySelector
-  * @return {CodeMirror}
+  * @return {[CodeMirror]}
    */
 
   RoomMirror = function(qs) {
@@ -162,7 +162,7 @@
     *
     *
     * @param {String} qs  String for querySelector
-    * @return {CodeMirror}
+    * @return {[CodeMirror]}
      */
     byAnnotation: byAnnotation
   });
