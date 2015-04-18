@@ -11561,7 +11561,7 @@ arguments[4][3][0].apply(exports,arguments)
   hidQueries = [];
 
   _hide = function(qs) {
-    return appendCSS(qs + " {\n  width      : 0;\n  height     : 0;\n  line-height: 0;\n  visibility : hidden;\n}");
+    return appendCSS(qs + " {\n  width      : 0;\n  height     : 0;\n  line-height: 0;\n  visibility : hidden;\n  margin     : 0;\n  padding    : 0;\n}");
   };
 
   _eval = function(qs, select) {

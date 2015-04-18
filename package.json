@@ -41,7 +41,7 @@
   "dependencies": {
     "append-css": "^0.1.2",
     "codemirror": "^5.0.0",
-    "evaluable-tag": "0.0.4",
+    "evaluable-tag": "0.0.5",
     "extend": "^2.0.0"
   },
   "private": false
