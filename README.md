@@ -104,4 +104,4 @@ var roommirrors = RoomMirror.byAnnotation('.rm-a');
 
 ##demo
 
-in myblog: [メモを揉め]()
+in myblog: [メモを揉め](http://memowomome.hatenablog.com/entry/2015/04/18/145610)
