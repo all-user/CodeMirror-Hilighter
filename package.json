@@ -1,6 +1,6 @@
 {
   "name": "roommirror",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Syntax highlight code blocks that is generated from Markdown with CodeMirror.",
   "main": "index.js",
   "scripts": {
